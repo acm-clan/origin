@@ -6,6 +6,6 @@ import (
 
 func main() {
 	or := origin.Default()
-	or.Handler(&Echo{})
+	or.Module(&Echo{})
 	or.Run()
 }
