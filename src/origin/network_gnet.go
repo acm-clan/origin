@@ -3,6 +3,7 @@ package origin
 import (
 	"github.com/panjf2000/gnet"
 	"origin/src/logger"
+	"origin/src/session"
 	"time"
 )
 
@@ -13,12 +14,16 @@ type NetworkGnet struct {
 
 func (es *NetworkGnet) OnOpened(c gnet.Conn) (out []byte, action gnet.Action) {
 	logger.Infof("Client Open:%v", c.RemoteAddr())
+	// create session
+	s := session.CreateSession(c)
+	c.SetContext(s)
 	return
 }
 
 func (es *NetworkGnet) React(frame []byte, c gnet.Conn) (out []byte, action gnet.Action) {
 	logger.Infof("React:%v", string(frame))
-	out = frame
+	s := session.Get(c)
+	s.OnNewData(frame)
 	return
 }
 
