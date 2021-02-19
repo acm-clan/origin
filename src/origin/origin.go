@@ -7,8 +7,6 @@ import (
 	"origin/src/module"
 )
 
-
-
 type OriginServer struct {
 	Option * Option
 	Modules []module.Module
@@ -32,7 +30,7 @@ func (or *OriginServer) Run() {
 		err := gnet.Serve(s, addr, gnet.WithMulticore(true))
 
 		if err != nil {
-
+			logger.Errorf("gnet serve error %v", err.Error())
 		}
 	case NetworkTypeGoNet:
 		logger.Info("not implement yet")
